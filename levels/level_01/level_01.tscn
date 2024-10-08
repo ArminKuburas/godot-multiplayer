@@ -1,13 +1,13 @@
 [gd_scene load_steps=7 format=4 uid="uid://df0hist01fbeo"]
 
-[ext_resource type="Texture2D" uid="uid://chwbcf7n2ajtp" path="res://art/platforms/Platformer_spritesheet.png" id="1_u8pq1"]
-[ext_resource type="PackedScene" uid="uid://beu4s07r4vw7f" path="res://player/player.tscn" id="2_c2exj"]
-[ext_resource type="Texture2D" uid="uid://bja0wl8tcw71c" path="res://art/backgrounds/background_01.png" id="2_ttyr3"]
-[ext_resource type="Texture2D" uid="uid://bujx43rcy5b85" path="res://art/backgrounds/background_02.png" id="3_6gooa"]
+[ext_resource type="Texture2D" uid="uid://chwbcf7n2ajtp" path="res://art/platforms/Platformer_spritesheet.png" id="1_ort1d"]
+[ext_resource type="Texture2D" uid="uid://bja0wl8tcw71c" path="res://art/backgrounds/background_01.png" id="2_nxani"]
+[ext_resource type="Texture2D" uid="uid://bujx43rcy5b85" path="res://art/backgrounds/background_02.png" id="3_oj8mb"]
+[ext_resource type="PackedScene" uid="uid://beu4s07r4vw7f" path="res://player/player.tscn" id="4_hrmm7"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tqtxu"]
-texture = ExtResource("1_u8pq1")
-texture_region_size = Vector2i(128, 128)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ujpk0"]
+texture = ExtResource("1_ort1d")
+texture_region_size = Vector2i(1, 1)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(64, -64, 64, 64, -64, 64)
 1:0/0 = 0
@@ -40,7 +40,7 @@ texture_region_size = Vector2i(128, 128)
 tile_size = Vector2i(128, 128)
 physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
-sources/0 = SubResource("TileSetAtlasSource_tqtxu")
+sources/0 = SubResource("TileSetAtlasSource_ujpk0")
 
 [node name="level_01" type="Node2D"]
 
@@ -62,7 +62,7 @@ motion_scale = Vector2(0.25, 1)
 motion_mirroring = Vector2(1334, 0)
 
 [node name="BackgroundTrees" type="Sprite2D" parent="----- Environment -----/ParallaxBackground/ParallaxTrees"]
-texture = ExtResource("2_ttyr3")
+texture = ExtResource("2_nxani")
 centered = false
 
 [node name="ParallaxHouses" type="ParallaxLayer" parent="----- Environment -----/ParallaxBackground"]
@@ -70,10 +70,10 @@ motion_scale = Vector2(0.5, 1)
 motion_mirroring = Vector2(1334, 0)
 
 [node name="BackgroundHouses" type="Sprite2D" parent="----- Environment -----/ParallaxBackground/ParallaxHouses"]
-texture = ExtResource("3_6gooa")
+texture = ExtResource("3_oj8mb")
 centered = false
 
 [node name="----- Players -----" type="Node" parent="."]
 
-[node name="Player" parent="----- Players -----" instance=ExtResource("2_c2exj")]
+[node name="Player" parent="----- Players -----" instance=ExtResource("4_hrmm7")]
 position = Vector2(0, 298)
