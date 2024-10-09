@@ -1,17 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3sm55ytopmn3"]
+[gd_scene load_steps=6 format=3 uid="uid://c3sm55ytopmn3"]
 
 [ext_resource type="Texture2D" uid="uid://bja0wl8tcw71c" path="res://art/backgrounds/background_01.png" id="1_m20qh"]
 [ext_resource type="Script" path="res://levels/menu/menu.gd" id="1_ntvy7"]
 [ext_resource type="Texture2D" uid="uid://bujx43rcy5b85" path="res://art/backgrounds/background_02.png" id="2_4f2hm"]
+[ext_resource type="PackedScene" uid="uid://df0hist01fbeo" path="res://levels/level_01/level_01.tscn" id="2_82khf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ke5di"]
 font_size = 64
 font_color = Color(0, 0, 0, 1)
 
-[node name="Menu" type="Node" node_paths=PackedStringArray("ip_line_edit", "status_label")]
+[node name="Menu" type="Node" node_paths=PackedStringArray("ui", "ip_line_edit", "status_label", "level_container", "not_connected_hbox", "host_hbox")]
 script = ExtResource("1_ntvy7")
-ip_line_edit = NodePath("UI/HBoxContainer/IPLineEdit")
+ui = NodePath("UI")
+ip_line_edit = NodePath("UI/NotConnectedHBox/IPLineEdit")
 status_label = NodePath("UI/Status")
+level_container = NodePath("Level")
+level_scene = ExtResource("2_82khf")
+not_connected_hbox = NodePath("UI/NotConnectedHBox")
+host_hbox = NodePath("UI/HostHBox")
 
 [node name="Level" type="Node" parent="."]
 
@@ -45,33 +51,41 @@ texture = ExtResource("2_4f2hm")
 expand_mode = 2
 stretch_mode = 4
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+[node name="NotConnectedHBox" type="HBoxContainer" parent="UI"]
 layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 720.0
 offset_bottom = 62.0
 
-[node name="HostButton" type="Button" parent="UI/HBoxContainer"]
+[node name="HostButton" type="Button" parent="UI/NotConnectedHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Host"
 
-[node name="JoinButton" type="Button" parent="UI/HBoxContainer"]
+[node name="JoinButton" type="Button" parent="UI/NotConnectedHBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Join"
 
-[node name="StartButton" type="Button" parent="UI/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Start"
-
-[node name="IPLineEdit" type="LineEdit" parent="UI/HBoxContainer"]
+[node name="IPLineEdit" type="LineEdit" parent="UI/NotConnectedHBox"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 text = "127.0.0.1"
 placeholder_text = "Enter IP Address"
+
+[node name="HostHBox" type="HBoxContainer" parent="UI"]
+visible = false
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 315.0
+offset_bottom = 62.0
+
+[node name="StartButton" type="Button" parent="UI/HostHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Start"
 
 [node name="Status" type="Label" parent="UI"]
 layout_mode = 1
@@ -89,6 +103,6 @@ _spawnable_scenes = PackedStringArray("res://levels/level_01/level_01.tscn")
 spawn_path = NodePath("../Level")
 spawn_limit = 1
 
-[connection signal="pressed" from="UI/HBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
-[connection signal="pressed" from="UI/HBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
-[connection signal="pressed" from="UI/HBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="UI/NotConnectedHBox/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="UI/NotConnectedHBox/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="UI/HostHBox/StartButton" to="." method="_on_start_button_pressed"]
