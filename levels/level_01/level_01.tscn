@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=4 uid="uid://df0hist01fbeo"]
+[gd_scene load_steps=8 format=4 uid="uid://df0hist01fbeo"]
 
+[ext_resource type="Script" path="res://levels/level.gd" id="1_ftj0n"]
 [ext_resource type="Texture2D" uid="uid://chwbcf7n2ajtp" path="res://art/platforms/Platformer_spritesheet.png" id="1_ort1d"]
 [ext_resource type="Texture2D" uid="uid://bja0wl8tcw71c" path="res://art/backgrounds/background_01.png" id="2_nxani"]
 [ext_resource type="Texture2D" uid="uid://bujx43rcy5b85" path="res://art/backgrounds/background_02.png" id="3_oj8mb"]
@@ -41,7 +42,11 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_on8lr")
 
-[node name="level_01" type="Node2D"]
+[node name="level_01" type="Node2D" node_paths=PackedStringArray("players_container", "spawn_points")]
+script = ExtResource("1_ftj0n")
+players_container = NodePath("----- Players -----/PlayersContainer")
+player_scene = ExtResource("4_hrmm7")
+spawn_points = [NodePath("----- Players -----/SpawnPoint_0"), NodePath("----- Players -----/SpawnPoint_1")]
 
 [node name="----- Environment -----" type="Node" parent="."]
 
@@ -74,5 +79,15 @@ tile_set = SubResource("TileSet_lnivs")
 
 [node name="----- Players -----" type="Node" parent="."]
 
-[node name="Player" parent="----- Players -----" instance=ExtResource("4_hrmm7")]
-position = Vector2(0, 298)
+[node name="PlayersContainer" type="Node2D" parent="----- Players -----"]
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="----- Players -----"]
+_spawnable_scenes = PackedStringArray("res://player/player.tscn")
+spawn_path = NodePath("../PlayersContainer")
+spawn_limit = 2
+
+[node name="SpawnPoint_0" type="Node2D" parent="----- Players -----"]
+position = Vector2(-23, 287)
+
+[node name="SpawnPoint_1" type="Node2D" parent="----- Players -----"]
+position = Vector2(201, 285)
