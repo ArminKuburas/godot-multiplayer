@@ -1,4 +1,4 @@
-extends Control
+extends Node
 
 @export var ip_line_edit: LineEdit
 @export var status_label: Label
@@ -30,4 +30,4 @@ func _on_connection_failed():
 	status_label.text = "Failed to connect"
 	
 func _on_connected_to_server():
-	status_label.text = "Successfully connected to server"
+	status_label.text = "Successfully connected!"
