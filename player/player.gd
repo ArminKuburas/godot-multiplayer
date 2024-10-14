@@ -13,7 +13,17 @@ extends CharacterBody2D
 var owner_id = 1
 var jump_count = 0
 var camera_instance
+var state = PlayerState.IDLE
 
+enum PlayerState
+{
+	IDLE,
+	WALKING,
+	JUMP_STARTED,
+	JUMPING,
+	DOUBLE_JUMPING,
+	FALLING
+}
 
 func _enter_tree():
 	owner_id = name.to_int()
@@ -46,34 +56,45 @@ func _physics_process(_delta: float) -> void:
 	face_movement_direction(horizontal_input)
 
 func handle_movement_state():
-	var is_falling = velocity.y > 0.0 and not is_on_floor()
-	var is_jumping = Input.is_action_just_pressed("jump") and is_on_floor()
-	var is_double_jumping = Input.is_action_just_pressed("jump") and not is_on_floor()
-	var is_jump_cancelled = Input.is_action_just_released("jump") and velocity.y < 0.0
-	var is_idle = is_zero_approx(velocity.x) and is_on_floor()
-	var is_walking = not is_zero_approx(velocity.x) and is_on_floor()
+	# Decide State
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		state = PlayerState.JUMP_STARTED
+	elif is_zero_approx(velocity.x) and is_on_floor():
+		state = PlayerState.IDLE
+	elif  not is_zero_approx(velocity.x) and is_on_floor():
+		state = PlayerState.WALKING
+	else:
+		state = PlayerState.JUMPING
 	
-	if is_jumping:
-		player_sprite.play("jump_start")
-	elif is_double_jumping:
-		player_sprite.play("double_jump_start")
-	elif is_walking:
-		player_sprite.play("walk")
-	elif is_falling:
-		player_sprite.play("fall")
-	elif is_idle:
-		player_sprite.play("idle")
-	
-	if is_jumping and jump_count < max_jumps:
-		velocity.y = -jump_strength
-		jump_count += 1
-	elif is_double_jumping and jump_count < max_jumps:
-		velocity.y = -jump_strength
-		jump_count += 1
-	elif is_jump_cancelled:
+	if velocity.y > 0.0 and not is_on_floor():
+		if Input.is_action_just_pressed("jump"):
+			state = PlayerState.DOUBLE_JUMPING
+		else:
+			state = PlayerState.FALLING
+		# Process State
+	match state:
+		PlayerState.IDLE:
+			player_sprite.play("idle")
+			jump_count = 0
+		PlayerState.WALKING:
+			player_sprite.play("walk")
+			jump_count = 0
+		PlayerState.JUMP_STARTED:
+			player_sprite.play("jump_start")
+			velocity.y = -jump_strength
+			jump_count += 1
+		PlayerState.DOUBLE_JUMPING:
+			player_sprite.play("double_jump_start")
+			if jump_count < max_jumps:
+				velocity.y = -jump_strength
+				jump_count += 1		
+		PlayerState.FALLING:
+			player_sprite.play("fall")
+		PlayerState.JUMPING:
+			pass
+	# Jump Cancelling
+	if Input.is_action_just_released("jump") and velocity.y < 0.0:
 		velocity.y = 0.0
-	elif is_on_floor():
-		jump_count = 0
 
 func face_movement_direction(horizontal_input):
 	if not is_zero_approx(horizontal_input):
@@ -83,7 +104,8 @@ func face_movement_direction(horizontal_input):
 			player_sprite.scale = initial_sprite_scale
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	player_sprite.play("jump")
+	if state == PlayerState.JUMPING:
+		player_sprite.play("jump")
 
 func set_up_camera():
 	camera_instance = player_camera.instantiate()
