@@ -84,8 +84,8 @@ func handle_movement_state():
 			velocity.y = -jump_strength
 			jump_count += 1
 		PlayerState.DOUBLE_JUMPING:
-			player_sprite.play("double_jump_start")
 			if jump_count < max_jumps:
+				player_sprite.play("double_jump_start")
 				velocity.y = -jump_strength
 				jump_count += 1		
 		PlayerState.FALLING:
