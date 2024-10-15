@@ -81,12 +81,11 @@ tile_set = SubResource("TileSet_lnivs")
 
 [node name="----- Interactables -----" type="Node" parent="."]
 
-[node name="PressurePlate" parent="----- Interactables -----" instance=ExtResource("6_htjlt")]
+[node name="DoorPlate" parent="----- Interactables -----" instance=ExtResource("6_htjlt")]
 position = Vector2(138, 301)
 
 [node name="Door" parent="----- Interactables -----" instance=ExtResource("7_usvnk")]
 position = Vector2(-2, 303)
-is_open = true
 
 [node name="----- Players -----" type="Node" parent="."]
 
@@ -102,3 +101,5 @@ position = Vector2(-23, 287)
 
 [node name="SpawnPoint_1" type="Node2D" parent="----- Players -----"]
 position = Vector2(201, 285)
+
+[connection signal="toggle" from="----- Interactables -----/DoorPlate" to="----- Interactables -----/Door" method="activate"]
