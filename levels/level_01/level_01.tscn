@@ -106,9 +106,9 @@ spawn_path = NodePath("../PlayersContainer")
 spawn_limit = 2
 
 [node name="SpawnPoint_0" type="Node2D" parent="----- Players -----"]
-position = Vector2(-23, 287)
+position = Vector2(-433, 45)
 
 [node name="SpawnPoint_1" type="Node2D" parent="----- Players -----"]
-position = Vector2(201, 285)
+position = Vector2(-91, 42)
 
 [connection signal="toggle" from="----- Interactables -----/DoorPlate" to="----- Interactables -----/Door" method="activate"]

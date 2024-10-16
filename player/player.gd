@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export var movement_speed = 300
 @export var gravity = 30
 @export var jump_strength = 600
-@export var max_jumps = 5
+@export var max_jumps = 2
 
 @export var player_sprite: AnimatedSprite2D
 @export var player_camera: PackedScene
