@@ -8,6 +8,10 @@ extends Node2D
 func _ready() -> void:
 	pass # Replace with function body.
 
+func _on_test_interact(state):
+	if state:
+		_on_interactable_interacted()
+
 func _on_interactable_interacted():
 	if is_locked:
 		is_locked = false
