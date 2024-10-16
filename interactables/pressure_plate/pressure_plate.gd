@@ -24,8 +24,10 @@ func _on_area_2d_body_exited(_body: Node2D) -> void:
 	update_plate_state()
 
 func update_plate_state():
+	var was_down: bool = is_down
 	is_down = bodies_on_plate >= 1
-	toggle.emit(is_down)
+	if was_down != is_down:
+		toggle.emit(is_down)
 	set_plate_properties()
 
 func set_plate_properties():
