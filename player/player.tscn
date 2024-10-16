@@ -69,9 +69,6 @@
 [ext_resource type="Texture2D" uid="uid://b771rxse6n114" path="res://art/characters/elf/walk/0_Dark_Elves_Walking_022.png" id="65_3215i"]
 [ext_resource type="Texture2D" uid="uid://c2r31n6lj0pks" path="res://art/characters/elf/walk/0_Dark_Elves_Walking_023.png" id="66_lq5pn"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sjscs"]
-size = Vector2(40, 56)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_ma46e"]
 animations = [{
 "frames": [{
@@ -317,6 +314,9 @@ properties/2/path = NodePath("AnimatedSprite2D:scale")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sjscs"]
+size = Vector2(40, 56)
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite")]
 position = Vector2(0, -1)
 collision_layer = 2
@@ -324,10 +324,6 @@ collision_mask = 3
 script = ExtResource("1_kuko4")
 player_sprite = NodePath("AnimatedSprite2D")
 player_camera = ExtResource("2_wdae2")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -28)
-shape = SubResource("RectangleShape2D_sjscs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -30)
@@ -337,8 +333,8 @@ animation = &"walk"
 autoplay = "idle"
 
 [node name="InteractionHandler" type="Area2D" parent="AnimatedSprite2D"]
-collision_layer = 0
-collision_mask = 4
+collision_layer = 2
+collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/InteractionHandler"]
 position = Vector2(250, 50)
@@ -346,6 +342,10 @@ shape = SubResource("RectangleShape2D_0lncq")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_yutk3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -28)
+shape = SubResource("RectangleShape2D_sjscs")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="AnimatedSprite2D/InteractionHandler" to="." method="_on_interaction_handler_area_entered"]
