@@ -5,19 +5,15 @@ extends Node2D
 var following_body
 
 func _process(delta: float) -> void:
-	print("wow")
+	if multiplayer.multiplayer_peer == null:
+		return
 	if multiplayer.is_server():
-		print("hello is server")
 		if following_body != null:
 			global_position = lerp(
 				following_body.global_position + follow_offset, 
 				global_position,
 				pow(0.5, delta * lerp_speed))
-			print("hi inside the if if statement")
-		else:
-			print("no following body")
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	following_body = area
-	print("area 2d entered")

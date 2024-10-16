@@ -24,7 +24,6 @@ func _process(_delta: float) -> void:
 	pass
 
 func create_game():
-	print("Hello")
 	var peer = ENetMultiplayerPeer.new()
 	var error = peer.create_server(PORT, MAX_CONNECTIONS)
 	if error:
