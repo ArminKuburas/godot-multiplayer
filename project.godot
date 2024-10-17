@@ -60,3 +60,4 @@ interact={
 2d_physics/layer_2="player_layer"
 2d_physics/layer_3="interactable"
 2d_physics/layer_4="key_layer"
+2d_physics/layer_5="pushable"
