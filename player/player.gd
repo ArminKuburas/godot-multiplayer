@@ -6,9 +6,10 @@ extends CharacterBody2D
 @export var max_jumps = 2
 
 @export var player_sprite: AnimatedSprite2D
+@export var player_finder: Node2D
 @export var player_camera: PackedScene
 @export var camera_height = 39
-@export var push_force = 10
+@export var push_force = 15
 
 @onready var initial_sprite_scale = player_sprite.scale
 var owner_id = 1
@@ -137,3 +138,11 @@ func _on_interaction_handler_area_entered(area: Area2D) -> void:
 func _on_interaction_handler_area_exited(area: Area2D) -> void:
 	if current_interactable == area:
 		current_interactable = null
+
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	player_finder.visible = false
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	player_finder.visible = true
