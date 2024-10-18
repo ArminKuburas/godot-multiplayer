@@ -9,7 +9,9 @@ extends CharacterBody2D
 @export var player_finder: Node2D
 @export var player_camera: PackedScene
 @export var camera_height = 39
-@export var push_force = 15
+@export var push_force = 10
+
+@export var target_position: Vector2 = Vector2.INF
 
 @onready var initial_sprite_scale = player_sprite.scale
 var owner_id = 1
@@ -35,10 +37,11 @@ func _enter_tree():
 		return
 	set_up_camera()
 	
-func _process(_delta):
+func _process(delta):
 	if multiplayer.multiplayer_peer == null:
 		return
 	if owner_id != multiplayer.get_unique_id():
+		global_position = HelperFunctions.ClientInterpolate(global_position, target_position, delta)
 		return
 	update_camera_pos()
 
@@ -59,6 +62,8 @@ func _physics_process(_delta: float) -> void:
 	handle_movement_state()
 		
 	move_and_slide()
+	
+	target_position = global_position
 	
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
