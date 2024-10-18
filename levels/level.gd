@@ -16,11 +16,12 @@ func _ready() -> void:
 		return
 	
 	multiplayer.peer_disconnected.connect(delete_player)
+	add_player(1)
 	
 	for id in multiplayer.get_peers():
 		add_player(id)
 	
-	add_player(1)
+	
 	
 	key_door.all_players_finished.connect(_on_all_players_finished)
 
